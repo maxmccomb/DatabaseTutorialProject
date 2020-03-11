@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -33,12 +34,16 @@ public class MainActivity extends AppCompatActivity {
     int startingIndex = 1;
     DatabaseReference databaseArtists;
 
+    Artist artist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
+
+        initializeArtist();
 
         nameEntry = findViewById(R.id.nameTextEdit);
         genreSpinner = findViewById(R.id.genreSpinner);
@@ -49,6 +54,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 addArtist();
                 setText();
+            }
+        });
+    }
+
+    public void initializeArtist(){
+        DatabaseReference r = databaseArtists.child("1");
+        r.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                artist = dataSnapshot.getValue(Artist.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -73,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
        }
     }
+
 
     public void setText(){
         DatabaseReference ref = databaseArtists.child("1");

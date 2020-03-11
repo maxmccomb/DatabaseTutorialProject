@@ -7,6 +7,9 @@ public class Artist {
     String genre;
 
 
+    public Artist (){
+
+    }
 
     public Artist(String artistName, String genre, String id) {
         this.artistName = artistName;
