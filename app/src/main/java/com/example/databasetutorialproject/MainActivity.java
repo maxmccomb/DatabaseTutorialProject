@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button addButton;
     TextView t;
 
-    int zero = 0;
+    int startingIndex = 1;
     DatabaseReference databaseArtists;
 
     @Override
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
        String genre = genreSpinner.getSelectedItem().toString();
 
        if(!TextUtils.isEmpty(name)){
-           zero ++;
-            String id = "" + zero;
+           startingIndex++;
+            String id = "" + startingIndex;
 
             Artist artist = new Artist(name, genre, id);
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setText(){
-        DatabaseReference ref = databaseArtists.child("-M1cvbVHNmuvqojIO0Wh");
+        DatabaseReference ref = databaseArtists.child("1");
         DatabaseReference ref2 = ref.child("artistName");
         ref2.addValueEventListener(new ValueEventListener() {
             @Override
